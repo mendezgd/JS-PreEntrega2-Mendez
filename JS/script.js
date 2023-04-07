@@ -38,7 +38,8 @@ const arrProd = [producto1, producto2, producto3, producto4, producto5, producto
     console.log(arrProd[i]);
 
 } */
-let nombreUsuario = prompt("ingrese su nombre: ");
+
+/* let nombreUsuario = prompt("ingrese su nombre: ");
 let edadUsuario = parseFloat(prompt("ingrese su edad: "));
 if (edadUsuario >= 18) {
 
@@ -59,4 +60,11 @@ if (edadUsuario >= 18) {
 
 } else {
     alert('usted es menor de edad, no tiene permitido comprar');
-}
+} */
+
+let Producto8 = new Producto ("Botas", 77, 10);
+arrProd.push (Producto8);
+
+console.table(arrProd);
+
+
