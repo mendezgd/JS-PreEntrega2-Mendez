@@ -1,8 +1,7 @@
 
 const iva = 1.21
 let total = 0
-let totalIva = 0
-/*Declaracion de constructor, muestra también con "mostrarInfo" el producto ingresado */
+/*Declaracion de funcion constructor de objetos, muestra también con "mostrarInfo" el producto ingresado */
 class Producto {
     constructor(nombre, stock, precio) {
         this.nombre = nombre;
@@ -10,14 +9,6 @@ class Producto {
         this.precio = parseFloat(precio);
         this.mostrarInfo = () => {
             return "nombre " + this.nombre + " stock: " + this.stock + " precio: $" + this.precio
-        }
-        this.vender = (cant) => {
-            if (cant <= this.stock) {
-                this.stock = this.stock - cant;
-                return "debe abonar :" + this.precio * cant * iva
-            } else {
-                return 'no hay stock';
-            }
         }
     }
 }
@@ -30,41 +21,35 @@ let producto5 = new Producto("chaleco", 100, 1000);
 let producto6 = new Producto("granada he", 25, 300);
 let producto7 = new Producto("granada sg", 13, 200);
 
-
 const arrProd = [producto1, producto2, producto3, producto4, producto5, producto6, producto7];
 
-
-/* for (let i = 0; i < arrProd.length; i++) {
-    console.log(arrProd[i]);
-
-} */
-
-/* let nombreUsuario = prompt("ingrese su nombre: ");
-let edadUsuario = parseFloat(prompt("ingrese su edad: "));
-if (edadUsuario >= 18) {
-
-    let mensaje = 'Elegir un producto de la lista para agergar:\n';
-    for (let i = 0; i < arrProd.length; i++) {
-        mensaje += `${i + 1}. ${arrProd[i].nombre}\n`;
-    }
-
-    let opcion = prompt(mensaje);
-    if (opcion !== null && !isNaN(opcion) && opcion >= 1 && opcion <= arrProd.length) {
-        let selecUsuario = arrProd[opcion - 1];
-        alert("ha seleccionado: " + selecUsuario.nombre + " " + "$" + selecUsuario.precio);
-        let cantUsuario = (prompt("cuantas unidades desea llevar?"));
-        console.log("el precio parcial a abonar seria de: " + cantUsuario * selecUsuario.precio * iva);
-    } else {
-        console.log('opción invalid.');
-    }
-
+/* let nombreUsuario = prompt("ingrese su nombre");
+alert("Bienvenido" + " " + nombreUsuario); */
+let edadUsuario = parseInt(prompt("ingrese su edad"));
+if (edadUsuario < 18) {
+    alert("Usted no puede comprar un arma: es menor de edad");
 } else {
-    alert('usted es menor de edad, no tiene permitido comprar');
-} */
+    do {
+        let mensaje = 'Elegir un producto de la lista para agergar:\n';
+        for (let i = 0; i < arrProd.length; i++) {
+            mensaje += `${i + 1}. ${arrProd[i].nombre}\n`;
+        }
+        mensaje += `${arrProd.length + 1}. Salir\n`;
+        mensaje += `${arrProd.length + 2}. Finalizar Compra\n`;
+        opcion = prompt(mensaje);
+        if (opcion !== null && !isNaN(opcion) && opcion >= 1 && opcion <= arrProd.length) {
+            let selecUsuario = arrProd[opcion - 1];
+            alert("ha seleccionado: " + selecUsuario.nombre + " " + "$" + selecUsuario.precio + " " + "// stock: " + selecUsuario.stock);
+            let cantUsuario = parseFloat(prompt("cuantas unidades desea llevar?"));
+            if (cantUsuario > selecUsuario.stock) {
+                alert("tenemos en stock actualmente: " + selecUsuario.stock)
+            } else {
+                console.log("el precio parcial a abonar seria de: " + cantUsuario * selecUsuario.precio * iva);
+                total += cantUsuario * selecUsuario.precio * iva
+            }
 
-let Producto8 = new Producto ("Botas", 77, 10);
-arrProd.push (Producto8);
-
-console.table(arrProd);
-
-
+        } else if (opcion = arrProd + 2) {
+            console.log("el total a abonar es de: $" + total);
+        }
+    } while (opcion <= arrProd.length && opcion != arrProd.length + 1);
+}
