@@ -1,4 +1,4 @@
-
+const carrito = [];
 const iva = 1.21
 let total = 0
 /*Declaracion de funcion constructor de objetos, muestra también con "mostrarInfo" el producto ingresado */
@@ -13,18 +13,33 @@ class Producto {
     }
 }
 
-let producto1 = new Producto("ak47", 10, 2500);
-let producto2 = new Producto("m4a1", 5, 3100);
-let producto3 = new Producto("desert eagle", 22, 700);
-let producto4 = new Producto("awp", 10, 5700);
-let producto5 = new Producto("chaleco", 100, 1000);
-let producto6 = new Producto("granada he", 25, 300);
-let producto7 = new Producto("granada sg", 13, 200);
+const arrProd = [
+    { id: 1, nombre: "Ak47", stock: 10, precio: 2500 },
+    { id: 2, nombre: "M4A1", stock: 5, precio: 3100 },
+    { id: 3, nombre: "Desert Eagle", stock: 22, precio: 700 },
+    { id: 4, nombre: "Sniper AWP", stock: 10, precio: 5700 },
+    { id: 5, nombre: "Chaleco anti-balas", stock: 50, precio: 1000 },
+];
 
-const arrProd = [producto1, producto2, producto3, producto4, producto5, producto6, producto7];
+function agregarCarro(id) {
+    const item = arrProd.find((p) => p.id === id);
+    carrito.push(item);
+}
 
-/* let nombreUsuario = prompt("ingrese su nombre");
-alert("Bienvenido" + " " + nombreUsuario); */
+const buscarNombre = (arr, filtro) => {
+    const buscar = arr.find((el) => {
+        return el.nombre.includes(filtro);
+    })
+    return buscar
+}
+
+function buscarPrecio(arr, filtro) {
+    return arr.filter((el) => {
+        return el.precio <= filtro
+    })
+}
+/* let usuario = prompt("ingrese su nombre");
+alert("Bienvenido" + " " + usuario); */
 let edadUsuario = parseInt(prompt("ingrese su edad"));
 if (edadUsuario < 18) {
     alert("Usted no puede comprar un arma: es menor de edad");
@@ -36,6 +51,8 @@ if (edadUsuario < 18) {
         }
         mensaje += `${arrProd.length + 1}. Salir\n`;
         mensaje += `${arrProd.length + 2}. Finalizar Compra\n`;
+        mensaje += `${arrProd.length + 3}. Filtrar por precio\n`;
+        mensaje += `${arrProd.length + 4}. Filtrar por nombre\n`;
         opcion = prompt(mensaje);
         if (opcion !== null && !isNaN(opcion) && opcion >= 1 && opcion <= arrProd.length) {
             let selecUsuario = arrProd[opcion - 1];
@@ -48,8 +65,28 @@ if (edadUsuario < 18) {
                 total += cantUsuario * selecUsuario.precio * iva
             }
 
-        } else if (opcion = arrProd + 2) {
+        } else if (opcion == arrProd.length + 2) {
             console.log("el total a abonar es de: $" + total);
+        } else if (opcion == arrProd.length + 3) {
+            let precioUsuario = parseFloat(prompt("ingrese un valor menor a: "));
+            const precioIngresado = buscarPrecio(arrProd, precioUsuario);
+            console.table(precioIngresado);
+            alert("F5 para volver a ingresar");
+        } else if (opcion == arrProd.length + 4) {
+            let nombreIngresado = prompt("ingrese el nombre del arma:");
+            const nombreEncontrado = buscarNombre(arrProd, nombreIngresado);
+            console.log(nombreEncontrado);
         }
     } while (opcion <= arrProd.length && opcion != arrProd.length + 1);
 }
+
+/* let nombreIngresado = prompt("ingresa un producto");
+const nombreEncontrado = buscarNombre(arrProd, nombreIngresado); */
+/* console.log(nombreEncontrado); */
+
+/*funcion de filtrado por precio*/
+
+/* precioIngresado = parseFloat(prompt("menor a: "));
+const precioEncontrado = buscarPrecio(arrProd, precioIngresado);
+
+console.table(precioEncontrado); */
