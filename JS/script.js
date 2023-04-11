@@ -21,10 +21,10 @@ const arrProd = [
     { id: 5, nombre: "Chaleco anti-balas", stock: 50, precio: 1000 },
 ];
 
-function agregarCarro(id) {
+/* function agregarCarro(id) {
     const item = arrProd.find((p) => p.id === id);
     carrito.push(item);
-}
+} */
 
 const buscarNombre = (arr, filtro) => {
     const buscar = arr.find((el) => {
@@ -79,14 +79,3 @@ if (edadUsuario < 18) {
         }
     } while (opcion <= arrProd.length && opcion != arrProd.length + 1);
 }
-
-/* let nombreIngresado = prompt("ingresa un producto");
-const nombreEncontrado = buscarNombre(arrProd, nombreIngresado); */
-/* console.log(nombreEncontrado); */
-
-/*funcion de filtrado por precio*/
-
-/* precioIngresado = parseFloat(prompt("menor a: "));
-const precioEncontrado = buscarPrecio(arrProd, precioIngresado);
-
-console.table(precioEncontrado); */
