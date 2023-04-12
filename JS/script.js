@@ -16,14 +16,11 @@ class Producto {
         this.nombre = nombre;
         this.stock = parseInt(stock);
         this.precio = parseFloat(precio);
-        this.mostrarInfo = () => {
-            return "nombre " + this.nombre + " stock: " + this.stock + " precio: $" + this.precio
-        }
     }
 }
 // filtrado de nombre //
 const buscarNombre = (arr, filtro) => {
-    const buscar = arr.find((el) => {
+    const buscar = arr.filter((el) => {
         let minus = el.nombre.toLowerCase();
         return minus.includes(filtro.toLowerCase());
     })
@@ -37,12 +34,13 @@ function buscarPrecio(arr, filtro) {
     })
 }
 
-// filtrado por nombre //
+// bienvenido //
 function ingresoNombre() {
     let usuario = prompt("ingrese su nombre");
     alert("Bienvenido" + " " + usuario);
 }
 
+// verifica edad //
 function checkEdad() {
     let edadUsuario = parseInt(prompt("ingrese su edad"));
     if (edadUsuario < 18) {
@@ -52,7 +50,7 @@ function checkEdad() {
         return true;
     }
 }
-// funcion principal //
+// funcion principal,  //
 function iniciarMenu() {
     let arrProd = [];
     do {
@@ -68,6 +66,7 @@ function iniciarMenu() {
         }
 
         mensaje += "P. Filtrar por precio\n";
+        mensaje += "N. Filtrar por nombre\n";
         mensaje += "F. Finalizar Compra\n";
         mensaje += "S. Salir\n";
         opcion = prompt(mensaje);
@@ -79,18 +78,17 @@ function iniciarMenu() {
                 alert("tenemos en stock actualmente: " + selecUsuario.stock)
             } else {
                 let costo = cantUsuario * selecUsuario.precio * iva;
-                alert("el precio por " + cantUsuario + " " + selecUsuario.nombre + " es " + costo);
+                alert("el precio por " + cantUsuario + " " + selecUsuario.nombre + " es " + costo + " incluyendo el iva");
                 total += cantUsuario * selecUsuario.precio * iva
             }
-
         } else if (opcion.toUpperCase() == "F") {
-            alert("el total a abonar es de: $" + total);
+            alert("el total a abonar es de: $" + total + " con iva incluido");
         } else if (opcion.toUpperCase() == "P") {
             let precioUsuario = parseFloat(prompt("ingrese un valor menor a: "));
-            arrProdFiltrado = buscarPrecio(arrProd, precioUsuario);
+            arrProdFiltrado = buscarPrecio(arrProdFijo, precioUsuario);
         } else if (opcion.toUpperCase() == "N") {
             let nombreIngresado = prompt("ingrese el nombre del arma:");
-            arrProdFiltrado = buscarNombre(arrProd, nombreIngresado);
+            arrProdFiltrado = buscarNombre(arrProdFijo, nombreIngresado);
         }
     } while (opcion.toUpperCase() != "S" && opcion.toUpperCase() != "F");
 }
