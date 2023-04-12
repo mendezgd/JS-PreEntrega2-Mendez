@@ -1,6 +1,14 @@
-const carrito = [];
 const iva = 1.21
 let total = 0
+const arrProdFijo = [
+    { id: 1, nombre: "Ak47", stock: 10, precio: 2500 },
+    { id: 2, nombre: "M4A1", stock: 5, precio: 3100 },
+    { id: 3, nombre: "Desert Eagle", stock: 22, precio: 700 },
+    { id: 4, nombre: "Sniper AWP", stock: 10, precio: 5700 },
+    { id: 5, nombre: "Chaleco anti-balas", stock: 50, precio: 1000 },
+];
+let arrProdFiltrado = [];
+
 /*Declaracion de funcion constructor de objetos, muestra también con "mostrarInfo" el producto ingresado */
 class Producto {
     constructor(nombre, stock, precio) {
@@ -13,22 +21,10 @@ class Producto {
     }
 }
 
-const arrProd = [
-    { id: 1, nombre: "Ak47", stock: 10, precio: 2500 },
-    { id: 2, nombre: "M4A1", stock: 5, precio: 3100 },
-    { id: 3, nombre: "Desert Eagle", stock: 22, precio: 700 },
-    { id: 4, nombre: "Sniper AWP", stock: 10, precio: 5700 },
-    { id: 5, nombre: "Chaleco anti-balas", stock: 50, precio: 1000 },
-];
-
-/* function agregarCarro(id) {
-    const item = arrProd.find((p) => p.id === id);
-    carrito.push(item);
-} */
-
 const buscarNombre = (arr, filtro) => {
     const buscar = arr.find((el) => {
-        return el.nombre.includes(filtro);
+        let minus = el.nombre.toLowerCase();
+        return minus.includes(filtro.toLowerCase());
     })
     return buscar
 }
@@ -38,21 +34,39 @@ function buscarPrecio(arr, filtro) {
         return el.precio <= filtro
     })
 }
-/* let usuario = prompt("ingrese su nombre");
-alert("Bienvenido" + " " + usuario); */
-let edadUsuario = parseInt(prompt("ingrese su edad"));
-if (edadUsuario < 18) {
-    alert("Usted no puede comprar un arma: es menor de edad");
-} else {
+
+function ingresoNombre() {
+    let usuario = prompt("ingrese su nombre");
+    alert("Bienvenido" + " " + usuario);
+}
+
+function checkEdad() {
+    let edadUsuario = parseInt(prompt("ingrese su edad"));
+    if (edadUsuario < 18) {
+        alert("Usted no puede comprar un arma: es menor de edad");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function iniciarMenu() {
+    let arrProd=[];
     do {
         let mensaje = 'Elegir un producto de la lista para agergar:\n';
+        if (arrProdFiltrado.length > 0) {
+            arrProd = arrProdFiltrado;
+            arrProdFiltrado = [];
+        } else {
+            arrProd = arrProdFijo;
+        }
         for (let i = 0; i < arrProd.length; i++) {
             mensaje += `${i + 1}. ${arrProd[i].nombre}\n`;
         }
-        mensaje += `${arrProd.length + 1}. Salir\n`;
-        mensaje += `${arrProd.length + 2}. Finalizar Compra\n`;
-        mensaje += `${arrProd.length + 3}. Filtrar por precio\n`;
-        mensaje += `${arrProd.length + 4}. Filtrar por nombre\n`;
+
+        mensaje += "P. Filtrar por precio\n";
+        mensaje += "F. Finalizar Compra\n";
+        mensaje += "S. Salir\n";
         opcion = prompt(mensaje);
         if (opcion !== null && !isNaN(opcion) && opcion >= 1 && opcion <= arrProd.length) {
             let selecUsuario = arrProd[opcion - 1];
@@ -61,21 +75,30 @@ if (edadUsuario < 18) {
             if (cantUsuario > selecUsuario.stock) {
                 alert("tenemos en stock actualmente: " + selecUsuario.stock)
             } else {
-                console.log("el precio parcial a abonar seria de: " + cantUsuario * selecUsuario.precio * iva);
+                let costo = cantUsuario * selecUsuario.precio * iva;
+                console.log("el precio por " + cantUsuario + " " + selecUsuario.nombre + " es " + costo);
                 total += cantUsuario * selecUsuario.precio * iva
             }
 
-        } else if (opcion == arrProd.length + 2) {
+        } else if (opcion.toUpperCase() == "F") {
             console.log("el total a abonar es de: $" + total);
-        } else if (opcion == arrProd.length + 3) {
+        } else if (opcion.toUpperCase() == "P") {
             let precioUsuario = parseFloat(prompt("ingrese un valor menor a: "));
-            const precioIngresado = buscarPrecio(arrProd, precioUsuario);
-            console.table(precioIngresado);
-            alert("F5 para volver a ingresar");
-        } else if (opcion == arrProd.length + 4) {
+            arrProdFiltrado = buscarPrecio(arrProd, precioUsuario);
+        } else if (opcion.toUpperCase() == "N") {
             let nombreIngresado = prompt("ingrese el nombre del arma:");
-            const nombreEncontrado = buscarNombre(arrProd, nombreIngresado);
-            console.log(nombreEncontrado);
+            arrProdFiltrado = buscarNombre(arrProd, nombreIngresado);
         }
-    } while (opcion <= arrProd.length && opcion != arrProd.length + 1);
+    } while (opcion.toUpperCase() != "S" && opcion.toUpperCase() != "F");
 }
+
+function iniciarCarro() {
+    ingresoNombre();
+    if (checkEdad()) {
+        iniciarMenu();
+    }
+}
+
+// Inicio programa //
+
+iniciarCarro();
