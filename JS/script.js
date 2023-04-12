@@ -1,3 +1,4 @@
+// declaracion de variables, const y array de objetos //
 const iva = 1.21
 let total = 0
 const arrProdFijo = [
@@ -9,7 +10,7 @@ const arrProdFijo = [
 ];
 let arrProdFiltrado = [];
 
-/*Declaracion de funcion constructor de objetos, muestra también con "mostrarInfo" el producto ingresado */
+// declaracion de constructor y funciones //
 class Producto {
     constructor(nombre, stock, precio) {
         this.nombre = nombre;
@@ -20,7 +21,7 @@ class Producto {
         }
     }
 }
-
+// filtrado de nombre //
 const buscarNombre = (arr, filtro) => {
     const buscar = arr.find((el) => {
         let minus = el.nombre.toLowerCase();
@@ -29,12 +30,14 @@ const buscarNombre = (arr, filtro) => {
     return buscar
 }
 
+// filtrado de precio //
 function buscarPrecio(arr, filtro) {
     return arr.filter((el) => {
         return el.precio <= filtro
     })
 }
 
+// filtrado por nombre //
 function ingresoNombre() {
     let usuario = prompt("ingrese su nombre");
     alert("Bienvenido" + " " + usuario);
@@ -49,9 +52,9 @@ function checkEdad() {
         return true;
     }
 }
-
+// funcion principal //
 function iniciarMenu() {
-    let arrProd=[];
+    let arrProd = [];
     do {
         let mensaje = 'Elegir un producto de la lista para agergar:\n';
         if (arrProdFiltrado.length > 0) {
@@ -76,12 +79,12 @@ function iniciarMenu() {
                 alert("tenemos en stock actualmente: " + selecUsuario.stock)
             } else {
                 let costo = cantUsuario * selecUsuario.precio * iva;
-                console.log("el precio por " + cantUsuario + " " + selecUsuario.nombre + " es " + costo);
+                alert("el precio por " + cantUsuario + " " + selecUsuario.nombre + " es " + costo);
                 total += cantUsuario * selecUsuario.precio * iva
             }
 
         } else if (opcion.toUpperCase() == "F") {
-            console.log("el total a abonar es de: $" + total);
+            alert("el total a abonar es de: $" + total);
         } else if (opcion.toUpperCase() == "P") {
             let precioUsuario = parseFloat(prompt("ingrese un valor menor a: "));
             arrProdFiltrado = buscarPrecio(arrProd, precioUsuario);
@@ -91,6 +94,8 @@ function iniciarMenu() {
         }
     } while (opcion.toUpperCase() != "S" && opcion.toUpperCase() != "F");
 }
+
+//funcion contenedora de todas las previamente declaradas //
 
 function iniciarCarro() {
     ingresoNombre();
